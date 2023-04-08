@@ -1,5 +1,14 @@
 
-// You should use socket_io_client for chatting and real time app update.
+// Socket.io is a popular library used to implement web sockets.
+
+How does it work?
+
+Our flutter app will be considered as a Client, while your backend is considered as Server and we will be establishing a bi-directional and real-time data transmission between them using Socket IO. Below are the flow steps you need to follow for successful data transmission.
+
+1. First, we have to build a connection with the server.
+2. Your app will be listening to events, so if a new event arrives, your UI will reflect it immediately (Like listening to new messages in Chat).
+3. You can emit events, maybe when you want to broadcast some data to your backend (Like emitting a new message to Chat).
+4. Don’t forget to close the connection between client and server.
 
 
 dependencies:
@@ -34,8 +43,10 @@ class SocketProvider extends ChangeNotifier {
             socket.on('connected', (id) => print('=== connected ==='));//when restart backend server it's connect automatically in server.
         });
     
-
-       // socket.on event perform real time update
+        socket.onConnectError((err) => print(err)); // return error
+        socket.onError((err) => print(err)); // return error
+         
+       // To add a listener, you can use socket.on(), and it will start listening to new events and will be triggered on all emits that happen on the socket server.
 
         socket.on('unBlock', (data) => print(data));//when other user unblock you your list is update in real time without refresh page or app
         socket.on('block', (receiveBlockChatRoom) => print(receiveBlockChatRoom));//when other user block you your list is update in real time without refresh page or app
