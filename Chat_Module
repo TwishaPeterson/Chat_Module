@@ -1,16 +1,16 @@
+
+// You should use socket_io_client for chatting and real time app update.
+
+
 dependencies:
-//we have to use socket_io_client   
-
-
-
 socket_io_client: ^2.0.0
 
-  import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
   // This socketprovider class is used to handle all socket events like socket connect, disconnect, on and emit events.
   // The emit event is used when the user performs any functionality, and the socket.on event is used to send real-time downloads to another user's device.
-
+  // We should use one provider so that we can easily manage all tasks from one page.
 
 class SocketProvider extends ChangeNotifier {
 
@@ -31,7 +31,7 @@ class SocketProvider extends ChangeNotifier {
         socket.onConnect((_) {
             print('connection established');//socket connected successfully
             socket.emit('setup', (id));//connect and set up in backend side
-            socket.on('connected', (id) => print('=== connected ==='));//when restart backend server
+            socket.on('connected', (id) => print('=== connected ==='));//when restart backend server it's connect automatically in server.
         });
     
 
@@ -62,8 +62,8 @@ class SocketProvider extends ChangeNotifier {
     
     //socket disconnect
     void disConnect() {
-        socket.emit('disconnection', userID); // The socket is disconnected in the backend.
-        socket.disconnect(); //The socket is disconnected when the application is closed.
+        socket.emit('disconnection', userID); // The socket is disconnect in the backend.
+        socket.disconnect(); //The socket is disconnect when the application is closed.
         socket.dispose();
         notifyListeners();
     }
